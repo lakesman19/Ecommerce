@@ -25,7 +25,8 @@
           </div>
         </li>
 
-        <li
+        <NuxtLink
+          to="/shoppingCart"
           class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer"
         >
           <div class="flex items-center text-[20px] font-semibold">
@@ -37,7 +38,7 @@
           >
             {{ userStore.cart.length }}
           </div>
-        </li>
+        </NuxtLink>
 
         <li
           class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer"
