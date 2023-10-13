@@ -9,7 +9,7 @@
           <img class="mx-auto" width="250" src="../public/cart-empty (2).png" />
           <div class="text-xl text-center mt-4">No items yet?</div>
 
-          <div v-if="true" class="flex text-center">
+          <div  class="flex text-center">
             <NuxtLink
               to="/"
               class="bg-[#FD374F] w-full text-white text-[21px] font-semibold p-1.5 rounded-full mt-4"
@@ -127,8 +127,8 @@ const goToCheckout = () => {
   });
 
   res.forEach((item) => userStore.checkout.push(toRaw(item)));
-
-  return navigateTo("/checkout");
+console.log("first")
+  return navigateTo("/checkOut");
 };
 </script>
 

@@ -205,7 +205,9 @@ const products = [
 let total = ref(0);
 
 let isProcessing = ref(false);
-
+onMounted(() => {
+  setTimeout(() => (userStore.isLoading = false), 200);
+});
 onBeforeMount(async () => {
   if (userStore.checkout.length < 1) {
     return navigateTo("/shoppingCart");
