@@ -90,7 +90,7 @@ onBeforeMount(async () => {
     if (response.status === 200) {
       const data = await response.json();
       product.value = data;
-
+      console.log(product?.value.price);
       setTimeout(() => (userStore.isLoading = false), 1000);
     } else {
       console.log("Error: Unable to fetch data");
@@ -112,12 +112,13 @@ const isInCart = computed(() => {
 });
 const priceComputed = computed(() => {
   if (product) {
-    return product?.price / 100;
+    return product?.value?.price / 100;
   }
   return "0.00";
 });
 const addToCart = () => {
-  userStore.cart.push(product);
+  userStore.cart.push(product.value);
+  // console.log(product);
 };
 </script>
 

@@ -111,23 +111,26 @@
                 <Icon name="ph:magnifying-glass" size="20" color="#ffffff" />
               </button>
             </div>
-            <div class="absolute bg-white max-w-[700px] h-auto w-full">
-              <div v-if="false" class="p-1">
+            <div
+              v-if="items"
+              class="absolute bg-white max-w-[700px] h-auto w-full"
+            >
+              <div v-for="item in items.data" :key="item" class="p-1">
                 <NuxtLink
-                  to=""
+                 :to="`/item/${item.id}`"
                   class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                 >
                   <div class="flex items-center">
-                    <!-- <img class="rounded-md" width="40" :src="item.url" /> -->
-                    <!-- <div class="truncate ml-2">{{ item.title }}</div> -->
+                    <img class="rounded-md" width="40" :src="item.url" />
+                    <div class="truncate ml-2">{{ item.title }}</div>
                   </div>
-                  <!-- <div class="truncate">${{ item.price / 100 }}</div> -->
+                  <div class="truncate">${{ item.price / 100 }}</div>
                 </NuxtLink>
               </div>
             </div>
           </div>
         </div>
-        <NuxtLink to="/shoppingcart" class="flex items-center">
+        <NuxtLink to="/shoppingCart" class="flex items-center">
           <button
             class="relative md:block hidden"
             @mouseenter="isCartHover = true"
@@ -136,7 +139,7 @@
             <span
               class="absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
             >
-              <!-- {{ userStore.cart.length }} -->
+              {{ userStore.cart.length }}
             </span>
             <div class="min-w-[40px]">
               <Icon name="ph:shopping-cart-simple-light" size="33" />
@@ -162,10 +165,44 @@
 
 <script setup>
 import { useUserStore } from "../stores/user";
+import Loading from "~/components/Loading.vue";
 const userStore = useUserStore();
 let isAccountMenu = ref(false);
 let searchItem = ref("");
-let isSearching = ref(true);
+let isSearching = ref(false);
+const searchByName = useDebounce(async () => {
+  isSearching.value = true;
+  try {
+    const response = await fetch(
+      `https://api.escuelajs.co/api/v1/products/?title=${searchItem.value}`
+    );
+    if (response.status === 200) {
+      const data = await response.json();
+      items.value = data;
+      isSearching.value = false;
+      console.log(items.value)
+    } else {
+      console.log("Error: Unable to fetch data");
+      isSearching.value = false;
+    }
+  } catch (error) {
+    console.error(error);
+    isSearching.value = false;
+  }
+}, 100);
+watch(
+  () => searchItem.value,
+  async () => {
+    if (!searchItem.value) {
+      setTimeout(() => {
+        items.value = "";
+        isSearching.value = false;
+        return;
+      }, 500);
+    }
+    searchByName();
+  }
+);
 </script>
 
     v-if="items && items.data"

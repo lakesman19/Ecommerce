@@ -5,7 +5,7 @@
   >
     <NuxtLink :to="`/item/${product.id}`">
       <!-- <div class="w-[100%] h-[300px] border"> -->
-      <img class="rounded-t w-[100%]" :src="product.category.image" />
+      <img class="rounded-t w-[100%]" :src="product?.category?.image" />
       <!-- </div> -->
 
       <div id="ProductDetails">
@@ -62,11 +62,11 @@ const props = defineProps(["product"]);
 const { product } = toRefs(props);
 
 const priceComputed = computed(() => {
-  return product.value.price / 100;
+  return product.value.price / 10;
 });
 
 const oldPriceComputed = computed(() => {
-  let res = (product.value.price + product.value.price / 20) / 100;
+  let res = (product.value.price + product.price / 20) / 10;
   return res.toFixed(2);
 });
 </script>
