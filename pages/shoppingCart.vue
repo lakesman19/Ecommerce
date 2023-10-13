@@ -9,14 +9,14 @@
           <img class="mx-auto" width="250" src="../public/cart-empty (2).png" />
           <div class="text-xl text-center mt-4">No items yet?</div>
 
-          <!-- <div v-if="true" class="flex text-center">
+          <div v-if="true" class="flex text-center">
             <NuxtLink
-              to="/auth"
+              to="/"
               class="bg-[#FD374F] w-full text-white text-[21px] font-semibold p-1.5 rounded-full mt-4"
             >
-              Sign in
+              Product page
             </NuxtLink>
-          </div> -->
+          </div>
         </div>
       </div>
       <div v-else class="md:flex gap-4 justify-between mx-auto w-full">
@@ -94,7 +94,7 @@ onMounted(() => {
   setTimeout(() => (userStore.isLoading = false), 200);
 });
 const cart = userStore.cart;
-console.log('CART---',cart);
+console.log("CART---", cart);
 const totalPriceComputed = computed(() => {
   let price = 0;
   cart.forEach((prod) => {
@@ -130,6 +130,5 @@ const goToCheckout = () => {
 
   return navigateTo("/checkout");
 };
-
 </script>
 

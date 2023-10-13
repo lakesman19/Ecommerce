@@ -4,7 +4,11 @@
       <div
         class="grid xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4"
       >
-        <div v-for="product in products" :key="product">
+        <div v-if="isLoading">
+          <!-- Show loading spinner or message -->
+          <Loading />
+        </div>
+        <div v-else v-for="product in products" :key="product">
           <ProductComponents :product="product" />
         </div>
       </div></div
@@ -15,6 +19,7 @@
 import MainLayouts from "~/layouts/MainLayouts.vue";
 import ProductComponents from "~/components/ProductComponents.vue";
 import { useUserStore } from "~/stores/user";
+import Loading from "~/components/Loading.vue";
 
 const userStore = useUserStore();
 let products = ref(null);

@@ -204,8 +204,3 @@ watch(
   }
 );
 </script>
-
-    v-if="items && items.data"
-                v-for="item in items.data"
-                 :to="`/item/${item.id}`"
-                  :color="isCartHover ? '#FF4646' : ''"
