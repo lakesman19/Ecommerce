@@ -32,6 +32,7 @@
           >
           <div class="truncate sm:pl-2">{{ product?.title }}</div>
         </div>
+        <div class="truncate sm:pl-2">{{ product?.description }}</div>
         <button
           @click="removeFromCart()"
           class="mx-3 sm:block hidden -mt-0.5 hover:text-red-500"

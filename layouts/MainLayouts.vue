@@ -115,17 +115,18 @@
               v-if="items"
               class="absolute bg-white max-w-[700px] h-auto w-full"
             >
-              <div v-for="item in items.data" :key="item" class="p-1">
-                <NuxtLink
-                 :to="`/item/${item.id}`"
+              <div v-for="item in items" :key="item" class="p-1">
+                {{ item?.title }}
+                <!-- <NuxtLink
+                  :to="`/item/${item.id}`"
                   class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                 >
                   <div class="flex items-center">
                     <img class="rounded-md" width="40" :src="item.url" />
-                    <div class="truncate ml-2">{{ item.title }}</div>
+                    <div class="truncate ml-2">{{ item?.title }}</div>
                   </div>
-                  <div class="truncate">${{ item.price / 100 }}</div>
-                </NuxtLink>
+                  <div class="truncate">${{ item?.price / 10 }}</div>
+                </NuxtLink> -->
               </div>
             </div>
           </div>
@@ -167,28 +168,19 @@
 import { useUserStore } from "../stores/user";
 import Loading from "~/components/Loading.vue";
 const userStore = useUserStore();
-let isAccountMenu = ref(false);
-let searchItem = ref("");
-let isSearching = ref(false);
+let isAccountMenu = ref(false)
+let isCartHover = ref(false)
+let isSearching = ref(false)
+let searchItem = ref('')
+let items = ref(null)
+// let items = ref(null)
 const searchByName = useDebounce(async () => {
   isSearching.value = true;
-  try {
-    const response = await fetch(
-      `https://api.escuelajs.co/api/v1/products/?title=${searchItem.value}`
-    );
-    if (response.status === 200) {
-      const data = await response.json();
-      items.value = data;
-      isSearching.value = false;
-      console.log(items.value)
-    } else {
-      console.log("Error: Unable to fetch data");
-      isSearching.value = false;
-    }
-  } catch (error) {
-    console.error(error);
-    isSearching.value = false;
-  }
+
+  items.value = await fetch(
+    `https://api.escuelajs.co/api/v1/products/?title=${searchItem.value}`
+  );
+  isSearching.value = false;
 }, 100);
 watch(
   () => searchItem.value,
